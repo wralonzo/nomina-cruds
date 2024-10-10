@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use CodeIgniter\RESTful\ResourceController;
-use CodeIgniter\HTTP\Response;
 use Exception;
 
 class AuthController extends ResourceController
@@ -12,118 +11,146 @@ class AuthController extends ResourceController
     public function register()
     {
         try {
-            $rules = [
-                'name'     => 'required',
-                'role'     => 'required',
-                'email'    => 'required',
-                'password' => 'required|min_length[3]'
-            ];
-
-            if (!$this->validate($rules)) {
-                return $this->fail($this->validator->getErrors());
+            $session = session();
+            if (!$this->request->getVar()) {
+                return view('layout/header') . view('auth/register') . view('layout/footer');
             }
+            $data = [
+                'email'         => $this->request->getVar('email'),
+                'role'          => $this->request->getVar('role'),
+                'name'          => $this->request->getVar('name'),
+                'user'          => $this->request->getVar('user'),
+                'password'      => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+            ];
 
             $userModel = new UserModel();
-
-            $json = $this->request->getJSON();
-
-            $data = [
-                'name'          => $json->name ?? null,
-                'email'         => $json->email ?? null,
-                'role'          => $json->role ?? null,
-                'dpi'           => $json->dpi ?? null,
-                'group_id'      => $json->group_id ?? null,
-                'password'      => password_hash($json->password ?? '', PASSWORD_DEFAULT),
-            ];
             $userModel->save($data);
-            return $this->respondCreated(['message' => 'User registered successfully', 'statusCode' => 200]);
+            // $errors = $userModel->errors();
+            // var_dump($errors);
+            // var_dump($dataSave);
+            $session->setFlashdata('msg', 'El usuario ha sido creado');
+            return redirect()->to('/auth/display');
         } catch (Exception $e) {
-            return $this->respondCreated(['message' => $e]);
+            return redirect()->to('/dashboard');
         }
     }
-
     public function login()
     {
+        $session = session();
         $rules = [
-            'email'    => 'required',
+            'email'    => 'required|min_length[3]',
             'password' => 'required|min_length[3]',
         ];
-
         if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+            $session->setFlashdata('msg', 'El usuario y la contraseña deben ser mayores a 3 caracteres');
+            return redirect()->to('/')->withInput()->with('errors', $this->validator->getErrors());;
         }
-        $json = $this->request->getJSON();
+
         $userModel = new UserModel();
-        $user = $userModel->where('dpi', $json->email)->first();
-        if (!$user || !password_verify($json->password, $user['password'])) {
-            $response = [
-                'message' => 'Credenciales no válidas',
-                'logged' => false,
+        $user = $userModel->where('user', $this->request->getVar('email'))->first();
+        if ($user && password_verify($this->request->getVar('password'), $user['password'])) {
+            $session_data = [
+                'id' => $user['id'],
+                'user' => $user['user'],
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'role' => $user['role'],
+                'logged_in' => TRUE
             ];
-            return $this->respondCreated($response);
+            $session->set($session_data);
+            return redirect()->to('/dashboard');
+        } else {
+            $session->setFlashdata('msg', 'Usuario o contraseña incorrectos');
+            return redirect()->to('/');
         }
-
-        // Aquí puedes generar un token JWT u otra lógica
-        $response = [
-            'message' => 'Login successful',
-            'logged' => true,
-            'user' => $user
-        ];
-
-        return $this->respondCreated($response);
     }
 
     public function users()
     {
         $userModel = new UserModel();
-        $user = $userModel->findAll();
-        // Aquí puedes generar un token JWT u otra lógica
-        $response = [
-            'message' => 'Login successful',
-            'logged' => true,
-            'users' => $user
+        $filters = [
+            'role' => $this->request->getVar('role'),
+            'name' => $this->request->getVar('name'),
         ];
 
-        return $this->respond($response);
-    }
+        // Configuración de paginación
+        $limit = 10; // Cambia esto según tus necesidades
+        $page = $this->request->getVar('page') ?: 1;
+        $offset = ($page - 1) * $limit;
 
-    public function getUser($id)
-    {
-        try {
-            $userModel = new UserModel();
-            $user = $userModel->find($id);
-            $response = [
-                'message' => 'Login successful',
-                'logged' => true,
-                'user' => $user
-            ];
-
-            return $this->respond($response);
-        } catch (Exception $e) {
-            return $this->failServerError('An error occurred: ' . $e->getMessage());
-        }
+        // Obtener usuarios
+        $users = $userModel->getUsers($limit, $offset, $filters);
+        $totalUsers = $userModel->getUserCount($filters);
+        $totalPages = ceil($totalUsers / $limit);
+        return view('layout/header') . view('auth/display', [
+            'users' => $users,
+            'filters' => $filters,
+            'totalPages' => $totalPages,
+            'currentPage' => $page,
+        ]) . view('layout/footer');
     }
 
     public function updateUser($id)
     {
         try {
-            // Validar que el ID del usuario sea válido
             $userModel = new UserModel();
-            $user = $userModel->find($id);
-            if (!$user) {
-                return $this->failNotFound('User not found');
+            $session = session();
+            if (!$this->request->getVar()) {
+                $user = $userModel->find($id);
+                if (!$user) {
+                    $session->setFlashdata('msg', 'El usuario no existe');
+                    return redirect()->to('/auth/display');
+                }
+                return view('layout/header') . view('auth/update', ['data' => $user]) . view('layout/footer');
             }
-            $json = $this->request->getJSON();
-            if ($json->password != null) {
-                $json->password = password_hash($json->password, PASSWORD_DEFAULT);
+            $data = $this->request->getVar();
+            if ($data['password'] != null) {
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
             } else {
-                unset($json->password);
+                unset($data['password']);
             }
 
-            $userModel->update($id, $json);
-            return $this->respondUpdated(['message' => 'User updated successfully', 'statusCode' => 200]);
+            $userModel->update($id, $data);
+            $session->setFlashdata('msg', 'El usuario ha sido actualizado');
+            return redirect()->to('/auth/display');
         } catch (Exception $e) {
             return $this->failServerError('An error occurred: ' . $e->getMessage());
         }
+    }
+
+    public function deleteOne($id)
+    {
+        $session = session();
+        try {
+            $model = new UserModel();
+            $record = $model->find($id);
+            if (!$record) {
+                $session->setFlashdata('msg', 'El usuario ya fue eliminado o no existe');
+                return redirect()->to('/auth/display');
+            }
+            $model->delete($id);
+            if (!$record) {
+                $session->setFlashdata('msg', 'El usuario no fue eliminado');
+                return redirect()->to('/auth/display');
+            }
+            $session->setFlashdata('msg', 'El usuario fue eliminado');
+            return redirect()->to('/auth/display');
+        } catch (Exception $e) {
+            $session->setFlashdata('msg', 'El usuario no fue eliminado, esta relacionado a otro registro');
+            return redirect()->to('/auth/display');
+        }
+    }
+
+    public function loginView()
+    {
+        helper(['form']);
+        echo view('auth/login');
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/');
     }
 }
