@@ -1,0 +1,31 @@
+ERROR - 2024-10-11 00:17:23 --> mysqli_sql_exception: Unknown column 'prestamo.id' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Database/MySQLi/Connection.php(312): mysqli->query('SELECT `prestam...', 0)
+#1 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `prestam...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `prestam...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Database/BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `prestam...', Array, false)
+#4 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 /Applications/XAMPP/xamppfiles/htdocs/nomina/app/Models/LiquidacionModel.php(22): CodeIgniter\BaseModel->findAll()
+#7 /Applications/XAMPP/xamppfiles/htdocs/nomina/app/Controllers/LiquidacionController.php(15): App\Models\LiquidacionModel->getAll()
+#8 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/CodeIgniter.php(933): App\Controllers\LiquidacionController->display()
+#9 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LiquidacionController))
+#10 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 /Applications/XAMPP/xamppfiles/htdocs/nomina/public/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 /Applications/XAMPP/xamppfiles/htdocs/nomina/system/rewrite.php(44): require_once('/Applications/X...')
+#15 {main}
+CRITICAL - 2024-10-11 00:17:23 --> Error: Call to a member function getResult() on false
+[Method: GET, Route: liquidacion/display]
+in SYSTEMPATH/Model.php on line 287.
+ 1 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 2 APPPATH/Models/LiquidacionModel.php(22): CodeIgniter\BaseModel->findAll()
+ 3 APPPATH/Controllers/LiquidacionController.php(15): App\Models\LiquidacionModel->getAll()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\LiquidacionController->display()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LiquidacionController))
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH/rewrite.php(44): require_once('/Applications/XAMPP/xamppfiles/htdocs/nomina/public/index.php')

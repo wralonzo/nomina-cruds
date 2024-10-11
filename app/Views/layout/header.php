@@ -51,4 +51,5 @@
         <li><a href="<?= base_url('horaextra/display') ?>"><i class="material-icons">assignment</i>Horas extras</a></li>
         <li><a href="<?= base_url('prestamo/display') ?>"><i class="material-icons">assignment</i>Prestamos</a></li>
         <li><a href="<?= base_url('cobro/display') ?>"><i class="material-icons">assignment</i>Crobros/Descuentos</a></li>
+        <li><a href="<?= base_url('liquidacion/display') ?>"><i class="material-icons">assignment</i>Liquidaciones</a></li>
     </ul>

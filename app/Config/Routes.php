@@ -58,3 +58,9 @@ $routes->match(['get', 'post'], 'nomina/register', 'NominaController::register')
 $routes->get('nomina/display', 'NominaController::display');
 $routes->match(['get', 'post'], 'nomina/update/(:num)', 'NominaController::upgrade/$1');
 $routes->get('nomina/delete/(:num)', 'NominaController::remove/$1');
+
+
+$routes->match(['get', 'post'], 'liquidacion/register', 'LiquidacionController::register');
+$routes->get('liquidacion/display', 'LiquidacionController::display');
+$routes->match(['get', 'post'], 'liquidacion/update/(:num)', 'LiquidacionController::upgrade/$1');
+$routes->get('liquidacion/delete/(:num)', 'LiquidacionController::remove/$1');
