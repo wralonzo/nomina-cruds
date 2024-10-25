@@ -1,12 +1,12 @@
-<main>
+<main style="margin-left: 300px;">
     <div class="container" style="margin-top: 20px;">
         <div class="row">
-            <div class="col s12 m8 offset-m2 l9 offset-l3">
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
                 <!-- Card para el formulario de login -->
                 <div class="card-action center-align">
                     <div class="card">
                         <div class="card-content">
-                            <span class="card-title center-align">Registrar Documento</span>
+                            <span class="card-title center-align">Registrar Salario</span>
                             <br>
 
                             <!-- Mostrar mensajes de error si existen -->
@@ -16,17 +16,16 @@
                                 </div>
                             <?php endif; ?>
 
-                            <form action="<?= base_url('/documento/register?id='.$empleado) ?>" method="post"  enctype="multipart/form-data">
+                            <form action="<?= base_url('/salario/register?id=' . $empleado) ?>" method="post">
 
                                 <div class="input-field">
-                                    <input id="nombre" type="text" name="nombre" class="validate" value="<?= old('nombre') ?>" required>
-                                    <label for="apellidos">Detalle</label>
+                                    <input id="monto" type="text" name="monto" class="validate" value="<?= old('monto') ?>" required>
+                                    <label for="apellidos">Monto</label>
+                                    <?php if (isset($errors['monto'])): ?>
+                                        <span class="red-text"><?= $errors['monto'] ?></span>
+                                    <?php endif; ?>
                                 </div>
 
-                                <div class="input-field">
-                                    <input id="archivo" type="file" name="archivo" class="validate" value="<?= old('archivo') ?>" required>
-                                    <label for="edad">Archivo</label>
-                                </div>
                                 <br>
                                 <div class="center-align">
                                     <button class="btn waves-effect waves-light blue" type="submit" name="action">Registrar

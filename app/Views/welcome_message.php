@@ -10,10 +10,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">Usuarios</span>
-                        <p>Total: 50</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Ver más</a>
+                        <p>Total: <?= $usuarios ?></p>
                     </div>
                 </div>
             </div>
@@ -21,10 +18,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">Empleados</span>
-                        <p>Total: 10</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Ver más</a>
+                        <p>Total: <?= $empleados ?></p>
                     </div>
                 </div>
             </div>
@@ -32,10 +26,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">Departamentos</span>
-                        <p>Total generados: 5</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Ver más</a>
+                        <p>Total generados: <?= $deptos ?></p>
                     </div>
                 </div>
             </div>

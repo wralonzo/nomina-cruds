@@ -2,9 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
 use App\Models\DepartamentoModel;
+use App\Models\DetalleFamiliarModel;
 use App\Models\EmpleadoModel;
+use App\Models\PermisosModel;
+use App\Models\HorasExtrasModel;
+use App\Models\PrestamoModel;
+use App\Models\HistorialSalarioModel;
+use App\Models\DocumentosModel;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
@@ -88,8 +93,30 @@ class EmpleadoController extends ResourceController
     {
         $userModel = new EmpleadoModel();
         $users = $userModel->findAll();
+        $detalleModel = new DetalleFamiliarModel();
+        $permisoModel = new PermisosModel();
+        $horaModel = new HorasExtrasModel();
+        $prestamoModel = new PrestamoModel();
+        $salarioModel = new HistorialSalarioModel();
+        $docModel = new DocumentosModel();
+
+        $detallesHijos = $detalleModel->where('empleado', $id)->where('tipo', 'Hijo')->orderBy('id', 'DESC')->findAll();
+        $detallesEsposa = $detalleModel->where('empleado', $id)->where('tipo', 'esposa')->orderBy('id', 'DESC')->findAll();
+        $permisos = $permisoModel->where('empleado', $id)->orderBy('id', 'DESC')->findAll();
+        $horas = $horaModel->where('empleado', $id)->orderBy('id', 'DESC')->findAll();
+        $prestamos = $prestamoModel->where('empleado', $id)->orderBy('id', 'DESC')->findAll();
+        $salarios = $salarioModel->where('empleado', $id)->orderBy('id', 'DESC')->findAll();
+        $docs = $docModel->where('empleado', $id)->orderBy('id', 'DESC')->findAll();
         return view('layout/header') . view('empleado/profile', [
-            'data' => $users
+            'data' => $users,
+            'hijos' => $detallesHijos,
+            'esposas' => $detallesEsposa,
+            'empleado' => $id,
+            'permisos' => $permisos,
+            'horas' => $horas,
+            'prestamos' => $prestamos,
+            'salarios' => $salarios,
+            'docs' => $docs,
         ]) . view('layout/footer');
     }
 }

@@ -13,24 +13,26 @@
 
         <div style="margin-left: 20px; margin-right: 20px" class="card">
             <div class="card-content">
+                <a href="<?= base_url('detalle/register?id=' . $empleado) ?>" class="btn btn-danger">Registrar Hijo(a)/Esposa(o)</a>
                 <span class="card-title">Esposa</span>
                 <table class="highlight tableData">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Estado civil</th>
+                            <th>Edad</th>
                             <th class="center-align">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data as $user): ?>
+                        <?php foreach ($esposas as $user): ?>
                             <tr>
                                 <td><?= esc($user['id']) ?></td>
-                                <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                <td class="center-align"><?= esc($user['estadocivil']) ?></td>
+                                <td><?= esc($user['nombres'])  ?></td>
+                                <td class="center-align"><?= esc($user['edad']) ?></td>
                                 <td class="center-align">
-
+                                    <a href="<?= base_url('detalle/update/' . esc($user['id'])) ?>" class="btn waves-effect waves-light blue"> <i class="material-icons">edit</i></a>
+                                    <a href="<?= base_url('detalle/delete/' . esc($user['id'])) ?>" class="btn waves-effect waves-light red"> <i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -44,17 +46,19 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Estado civil</th>
+                            <th>Edad</th>
                             <th class="center-align">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data as $user): ?>
+                        <?php foreach ($hijos as $user): ?>
                             <tr>
                                 <td><?= esc($user['id']) ?></td>
-                                <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                <td class="center-align"><?= esc($user['estadocivil']) ?></td>
+                                <td><?= esc($user['nombres']) ?></td>
+                                <td class="center-align"><?= esc($user['edad']) ?></td>
                                 <td class="center-align">
+                                    <a href="<?= base_url('detalle/update/' . esc($user['id'])) ?>" class="btn waves-effect waves-light blue"> <i class="material-icons">edit</i></a>
+                                    <a href="<?= base_url('detalle/delete/' . esc($user['id'])) ?>" class="btn waves-effect waves-light red"> <i class="material-icons">delete</i></a>
 
                                 </td>
                             </tr>
@@ -64,22 +68,25 @@
 
                 <br><br>
                 <span class="card-title">Documentos</span>
+                <a href="<?= base_url('documento/register?id=' . $empleado) ?>" class="btn waves-effect waves-light blue"> <i class="material-icons">add</i></a>
                 <table class="highlight tableData">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Estado civil</th>
+                            <th>Archivo</th>
                             <th class="center-align">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data as $user): ?>
+                        <?php foreach ($docs as $user): ?>
                             <tr>
                                 <td><?= esc($user['id']) ?></td>
-                                <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                <td class="center-align"><?= esc($user['estadocivil']) ?></td>
+                                <td><?= esc($user['nombre']) ?></td>
+                                <td class="center-align"><a href="<?= base_url('uploads/'.$user['path']) ?>" target="_blank"><?= $user['path']?></a> </td>
                                 <td class="center-align">
+                                    <a href="<?= base_url('documento/update/' . esc($user['id'])) ?>" class="btn waves-effect waves-light blue"> <i class="material-icons">edit</i></a>
+                                    <a href="<?= base_url('documento/delete/' . esc($user['id'])) ?>" class="btn waves-effect waves-light red"> <i class="material-icons">delete</i></a>
 
                                 </td>
                             </tr>
@@ -99,19 +106,19 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Estado civil</th>
-                                    <th class="center-align">Acciones</th>
+                                    <th>Detalle</th>
+                                    <th>Estado</th>
+                                    <th class="center-align">Fecha</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $user): ?>
+                                <?php foreach ($permisos as $user): ?>
                                     <tr>
                                         <td><?= esc($user['id']) ?></td>
-                                        <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                        <td class="center-align"><?= esc($user['estadocivil']) ?></td>
+                                        <td><?= esc($user['detalle'])  ?></td>
+                                        <td class="center-align"><?= esc($user['estado']) ?></td>
                                         <td class="center-align">
-
+                                            <?= esc($user['created_at'])  ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -132,18 +139,20 @@
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Estado civil</th>
-                                    <th class="center-align">Acciones</th>
+                                    <th class="center-align">Festivo</th>
+                                    <th>Fecha</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $user): ?>
+                                <?php foreach ($horas as $user): ?>
                                     <tr>
                                         <td><?= esc($user['id']) ?></td>
-                                        <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                        <td class="center-align"><?= esc($user['estadocivil']) ?></td>
+                                        <td><?= esc($user['horas']) ?></td>
+                                        <td class="center-align"><?= esc($user['monto']) ?></td>
                                         <td class="center-align">
-
+                                            <?= esc($user['festivo']) ?>
                                         </td>
+                                        <th> <?= esc($user['created_at'])  ?></th>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -159,23 +168,28 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">Salarios</span>
+                        <a href="<?= base_url('salario/register?id=' . $empleado) ?>" class="btn waves-effect waves-light blue"> <i class="material-icons">add</i></a>
                         <table class="highlight tableData">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Estado civil</th>
+                                    <th>Monto</th>
+                                    <th>Fecha</th>
                                     <th class="center-align">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $user): ?>
+                                <?php foreach ($salarios as $user): ?>
                                     <tr>
                                         <td><?= esc($user['id']) ?></td>
-                                        <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                        <td class="center-align"><?= esc($user['estadocivil']) ?></td>
+                                        <td><?= esc($user['monto']) ?></td>
+                                        <td class="center-align"><?= esc($user['created_at']) ?></td>
                                         <td class="center-align">
+                                        <td class="center-align">
+                                            <a href="<?= base_url('salario/update/' . esc($user['id'])) ?>" class="btn waves-effect waves-light blue"> <i class="material-icons">edit</i></a>
+                                            <a href="<?= base_url('salario/delete/' . esc($user['id'])) ?>" class="btn waves-effect waves-light red"> <i class="material-icons">delete</i></a>
 
+                                        </td>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -194,20 +208,18 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Estado civil</th>
-                                    <th class="center-align">Acciones</th>
+                                    <th>Monto</th>
+                                    <th>Cuotas</th>
+                                    <th class="center-align">Saldo</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $user): ?>
+                                <?php foreach ($prestamos as $user): ?>
                                     <tr>
                                         <td><?= esc($user['id']) ?></td>
-                                        <td><?= esc($user['nombres']) . ' ' . esc($user['apellidos']) ?></td>
-                                        <td class="center-align"><?= esc($user['estadocivil']) ?></td>
-                                        <td class="center-align">
-
-                                        </td>
+                                        <td><?= esc($user['monto']) ?></td>
+                                        <td class="center-align"><?= esc($user['cuotas']) ?></td>
+                                        <td class="center-align"><?= esc($user['saldo']) ?> </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

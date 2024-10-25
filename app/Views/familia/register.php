@@ -6,40 +6,45 @@
                 <div class="card-action center-align">
                     <div class="card">
                         <div class="card-content">
-                            <span class="card-title center-align">Actualizar registro</span>
+                            <span class="card-title center-align">Registrar Famila</span>
                             <br>
-                            <form action="<?= base_url('/detalle/update/'. $data['id']) ?>" method="post">
+
+                            <!-- Mostrar mensajes de error si existen -->
+                            <?php if (session()->getFlashdata('msg')): ?>
+                                <div class="card-panel red white-text">
+                                    <?= session()->getFlashdata('msg') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <form action="<?= base_url('/detalle/register?id='.$empleado) ?>" method="post">
                                 <div class="input-field">
                                     <label for="options">Seleccione:</label><br>
                                     <select id="options" name="tipo">
                                         <option disabled selected>Seleeccione una opcion</option>
-                                        <option <?= $data['tipo'] == 'Hijo' ? 'selected' : '' ?> value="Hijo">Hijo</option>
-                                        <option <?= $data['tipo'] == 'Esposa' ? 'selected' : '' ?> value="Esposa">Esposa</option>
+                                        <option value="Hijo">Hijo</option>
+                                        <option value="Esposa">Esposa</option>
 
                                     </select>
                                 </div>
 
                                 <div class="input-field">
-                                    <input id="email" type="text" name="nombres" class="validate" value="<?= $data['nombres'] ?>" required>
-                                    <label for="nombres">Nombres</label>
+                                    <input id="nombres" type="text" name="nombres" class="validate" value="<?= old('nombres') ?>" required>
+                                    <label for="apellidos">Nombres</label>
                                     <?php if (isset($errors['nombres'])): ?>
                                         <span class="red-text"><?= $errors['nombres'] ?></span>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="input-field">
-                                    <input id="edad" type="text" name="edad" class="validate" value="<?= $data['edad'] ?>" required>
-                                    <label for="nombres">Nombres</label>
+                                    <input id="edad" type="text" name="edad" class="validate" value="<?= old('edad') ?>" required>
+                                    <label for="edad">Edad</label>
                                     <?php if (isset($errors['edad'])): ?>
                                         <span class="red-text"><?= $errors['edad'] ?></span>
                                     <?php endif; ?>
                                 </div>
-
-
-
                                 <br>
                                 <div class="center-align">
-                                    <button class="btn waves-effect waves-light blue" type="submit" name="action">Guardar
+                                    <button class="btn waves-effect waves-light blue" type="submit" name="action">Registrar
                                         <i class="material-icons right">send</i>
                                     </button>
                                 </div>

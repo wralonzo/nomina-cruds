@@ -64,3 +64,17 @@ $routes->match(['get', 'post'], 'liquidacion/register', 'LiquidacionController::
 $routes->get('liquidacion/display', 'LiquidacionController::display');
 $routes->match(['get', 'post'], 'liquidacion/update/(:num)', 'LiquidacionController::upgrade/$1');
 $routes->get('liquidacion/delete/(:num)', 'LiquidacionController::remove/$1');
+
+
+$routes->match(['get', 'post'], 'detalle/register', 'DetalleFamiliarController::register');
+$routes->match(['get', 'post'], 'detalle/update/(:num)', 'DetalleFamiliarController::upgrade/$1');
+$routes->get('detalle/delete/(:num)', 'DetalleFamiliarController::remove/$1');
+
+$routes->match(['get', 'post'], 'salario/register', 'SalarioController::register');
+$routes->match(['get', 'post'], 'salario/update/(:num)', 'SalarioController::upgrade/$1');
+$routes->get('salario/delete/(:num)', 'SalarioController::remove/$1');
+
+
+$routes->match(['get', 'post'], 'documento/register', 'DocumentoController::register');
+$routes->match(['get', 'post'], 'documento/update/(:num)', 'DocumentoController::upgrade/$1');
+$routes->get('documento/delete/(:num)', 'DocumentoController::remove/$1');
