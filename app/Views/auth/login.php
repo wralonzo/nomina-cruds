@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body class="blue lighten-5"> <!-- Fondo suave para un mejor contraste -->
+<body class="indigo lighten-5"> <!-- Fondo suave para un mejor contraste -->
 
     <div class="container">
         <div class="row">
@@ -57,7 +57,7 @@
 
                             <br>
                             <div class="center-align">
-                                <button class="btn waves-effect waves-light blue" type="submit" name="action">Ingresar
+                                <button class="btn waves-effect waves-light indigo" type="submit" name="action">Ingresar
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>

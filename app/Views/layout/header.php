@@ -11,10 +11,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
-<body class="blue lighten-5"> <!-- Fondo suave -->
+<body class="indigo lighten-3"> <!-- Fondo suave -->
 
     <!-- Navbar -->
-    <nav class="blue">
+    <nav class="indigo">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo center">Sistema de control de nomina</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
